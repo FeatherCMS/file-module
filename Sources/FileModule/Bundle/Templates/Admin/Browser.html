@@ -1,0 +1,75 @@
+#define(css):
+tr {
+    grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 599px) {
+    th:nth-of-type(1), th:nth-of-type(2), th:nth-of-type(3), th:nth-of-type(4) {
+        display: none;
+    }
+    td:nth-of-type(1), td:nth-of-type(2) {
+        grid-column: span 2;
+    }
+    td:nth-of-type(2) {
+        padding-bottom: 16px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #e9e9e9;
+    }
+    @media (prefers-color-scheme: dark) {
+        td:nth-of-type(2) {
+            border-bottom: 1px solid #232323;
+        }
+    }
+}
+@media (min-width: 600px) {
+    tr {
+        grid-template-columns: 64px 1fr 96px 64px;
+    }
+}
+#enddefine
+
+#define(toolbarCenter):
+    File browser
+#enddefine
+#define(toolbarLeft):
+    <a href="#($req.url.path)">#svg("home")</a>
+#enddefine
+#define(toolbarRight):
+    <a href="#($req.url.path.trimLast())directory/?key=#Request(query: "key")">#svg("folder-plus")</a>
+    <a href="#($req.url.path.trimLast())upload/?key=#Request(query: "key")">#svg("arrow-up-circle")</a>
+#enddefine
+
+#define(body):
+<h5 class="m:h m:v:zero">#svg("folder") &nbsp; /#(current.key ?? "")</h5>
+<table class="m">
+    <thead>
+        <tr>
+            <th class="td:center">Icon</th>
+            <th class="td:left m:h:s">Key</th>
+            <th class="td:center">View</th>
+            <th class="td:center">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        #if(parent != nil):
+        <tr>
+            <td class="td:left m:h:s"><a href="#($req.url.path)?key=#(parent.key)">#if(parent.ext == nil):#svg("folder")#elseif(["png", "jpg", "jpeg"].contains(parent.ext)):<img src="#(parent.key.resolve())">#else:#svg("file")#endif</a></td>
+            <td class="td:left m:h:s"><a href="#($req.url.path)?key=#(parent.key)">..</a></td>
+            <th class="td:center">&nbsp;</th>
+            <th class="td:center">&nbsp;</th>
+        </tr>
+        #endif
+
+        #for(item in children):
+    <tr>
+        <td class="td:left m:h:s"><a href="#($req.url.path)?key=#(item.key)">#if(item.ext == nil):#svg("folder")#elseif(["png", "jpg", "jpeg"].contains(item.ext)):<img src="#(item.key.resolve())">#else:#svg("file")#endif</a></td>
+        <td class="td:left m:h:s"><a href="#($req.url.path)?key=#(item.key)">#(item.name)</a></td>
+        <td class="td:center">#if(item.ext != nil):<a href="#(item.key.resolve())" target="_blank">#svg("eye")</a>#else:&nbsp;#endif</td>
+        <td class="td:center"><a href="#($req.url.path.trimLast())delete/?key=#(item.key)&redirect=#($req.url.path)?key=#Request(query: "key")">#svg("trash")</a></td>
+    </tr>
+        #endfor
+    </tbody>
+</table>
+
+#enddefine
+#inline("Admin/Index")
+
