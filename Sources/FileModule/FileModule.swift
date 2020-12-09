@@ -21,6 +21,7 @@ final class FileModule: ViperModule {
         app.hooks.register("admin", use: (router as! FileRouter).adminRoutesHook)
         
         app.hooks.register("leaf-admin-menu", use: leafAdminMenuHook)
+        app.hooks.register("user-permission-install", use: userPermissionInstallHook)
     }
 
     // MARK: - hooks
@@ -34,6 +35,17 @@ final class FileModule: ViperModule {
                     "label": "Browser",
                 ],
             ])
+        ]
+    }
+    
+    func userPermissionInstallHook(args: HookArguments) -> [[String: Any]] {
+        [
+            /// file
+            ["key": "file",                 "name": "File module"],
+            /// menu menus
+            ["key": "file.browser",         "name": "File browser"],
+            ["key": "file.create",          "name": "File create"],
+            ["key": "file.delete",          "name": "File delete"],
         ]
     }
 }

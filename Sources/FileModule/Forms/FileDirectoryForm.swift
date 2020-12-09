@@ -9,44 +9,18 @@ import FeatherCore
 
 final class FileDirectoryForm: Form {
 
-    struct Input: Decodable {
-        var key: String
-        var name: String
-    }
-
-    var key = StringFormField()
-    var name = StringFormField()
+    var key = FormField<String>(key: "key")
+    var name = FormField<String>(key: "name").alphanumerics().length(max: 250)
     var notification: String?
     
-    var leafData: LeafData {
-        .dictionary([
-            "key": key,
-            "name": name,
-            "notification": notification,
-        ])
+    var fields: [FormFieldRepresentable] {
+        [key, name]
     }
 
     init() {}
 
-    init(req: Request) throws {
-        let context = try req.content.decode(Input.self)
-        key.value = context.key
-        name.value = context.name
-    }
-
-    func validate(req: Request) -> EventLoopFuture<Bool> {
-        var valid = true
-               
-        if name.value.isEmpty {
-            name.error = "Name is required"
-            valid = false
-        }
-
-        if Validator.characterSet(.alphanumerics).validate(key.value).isFailure ||
-            Validator.characterSet(.alphanumerics).validate(name.value).isFailure {
-            name.error = "Directory names can't contain special characters"
-            valid = false
-        }
-        return req.eventLoop.future(valid)
+    func save(req: Request) -> EventLoopFuture<Void> {
+        let directoryKey = String((key.value! + "/" + name.value!).safePath().dropFirst().dropLast())
+        return req.fs.createDirectory(key: directoryKey)
     }
 }

@@ -33,8 +33,8 @@
         "repositoryURL": "https://github.com/binarybirds/content-api",
         "state": {
           "branch": null,
-          "revision": "c1971a7617b6dbd9ee6b2f6abc54c883ed617063",
-          "version": "1.0.5"
+          "revision": "25fcc8cabef0482eac7b4a14e64cf26396d78460",
+          "version": "1.1.0-beta.1"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/binarybirds/feather-core",
         "state": {
           "branch": null,
-          "revision": "844612f47c64a85757661571c470756f14ef4b76",
-          "version": "1.0.0-beta.20"
+          "revision": "ab65070bff1dfce64981a210ffa4ddd8e3aceafd",
+          "version": "1.0.0-beta.26.1"
         }
       },
       {
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/vapor/fluent",
         "state": {
           "branch": null,
-          "revision": "e681c93df3201a2d8ceef15e8a9a0634578df233",
-          "version": "4.0.0"
+          "revision": "855cd81cd129675dcb9adadeca2286281dbc0190",
+          "version": "4.1.0"
         }
       },
       {
@@ -62,6 +62,15 @@
           "branch": null,
           "revision": "b6cd7b93ef45b767041efeb83571457658c4acf7",
           "version": "1.10.1"
+        }
+      },
+      {
+        "package": "fluent-sqlite-driver",
+        "repositoryURL": "https://github.com/vapor/fluent-sqlite-driver",
+        "state": {
+          "branch": null,
+          "revision": "6f29f6f182c812075f09c7575c18ac5535c26824",
+          "version": "4.0.1"
         }
       },
       {
@@ -92,6 +101,15 @@
         }
       },
       {
+        "package": "leaf-foundation",
+        "repositoryURL": "https://github.com/binarybirds/leaf-foundation",
+        "state": {
+          "branch": null,
+          "revision": "2cf2f6ec0822514d5177053f15960771fbc971ee",
+          "version": "1.0.0-beta.5"
+        }
+      },
+      {
         "package": "leaf-kit",
         "repositoryURL": "https://github.com/vapor/leaf-kit",
         "state": {
@@ -114,8 +132,17 @@
         "repositoryURL": "https://github.com/binarybirds/liquid-kit.git",
         "state": {
           "branch": null,
-          "revision": "a50084b7892bbd8975e25d0a053fd40a542541a4",
-          "version": "1.2.0-beta.4"
+          "revision": "c32f534f2e401f6ee422abbd0d1b9c0ec4422500",
+          "version": "1.2.0-beta.6"
+        }
+      },
+      {
+        "package": "liquid-local-driver",
+        "repositoryURL": "https://github.com/binarybirds/liquid-local-driver",
+        "state": {
+          "branch": null,
+          "revision": "83b74c43f6445e7feed666139ada23b28719b920",
+          "version": "1.2.0-beta.8"
         }
       },
       {
@@ -134,6 +161,24 @@
           "branch": null,
           "revision": "ea9928b7f4a801b175a00b982034d9c54ecb6167",
           "version": "3.7.0"
+        }
+      },
+      {
+        "package": "sqlite-kit",
+        "repositoryURL": "https://github.com/vapor/sqlite-kit.git",
+        "state": {
+          "branch": null,
+          "revision": "2ec279b9c845cec254646834b66338551a024561",
+          "version": "4.0.2"
+        }
+      },
+      {
+        "package": "sqlite-nio",
+        "repositoryURL": "https://github.com/vapor/sqlite-nio.git",
+        "state": {
+          "branch": null,
+          "revision": "6481dd0b01112d082dd7eb362782126e81964138",
+          "version": "1.1.0"
         }
       },
       {
@@ -195,8 +240,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
         "state": {
           "branch": null,
-          "revision": "2f3c6e742317cdf2bbe89ac802b6187b1420e0f3",
-          "version": "1.16.0"
+          "revision": "d4060ac4d056a48d946298f04968f6f6080cc618",
+          "version": "1.16.2"
         }
       },
       {
@@ -231,8 +276,8 @@
         "repositoryURL": "https://github.com/binarybirds/view-kit",
         "state": {
           "branch": null,
-          "revision": "015ad9ed4667af6076570b3c397582622d3608f2",
-          "version": "1.3.0-beta.3"
+          "revision": "fc346b5989df507af9339f79aadf563f25993dc1",
+          "version": "1.3.0-beta.27"
         }
       },
       {
@@ -240,8 +285,8 @@
         "repositoryURL": "https://github.com/binarybirds/viper-kit",
         "state": {
           "branch": null,
-          "revision": "dc4598b3a2bf882af7759ddb54081c9f84bbd93e",
-          "version": "1.5.0-beta.7"
+          "revision": "a7ce44e9ba96eddfc60299c2067ddf057d9da351",
+          "version": "1.5.0-beta.8"
         }
       },
       {
