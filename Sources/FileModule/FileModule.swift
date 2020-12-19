@@ -29,23 +29,14 @@ final class FileModule: ViperModule {
         [
             "name": "File",
             "icon": "folder",
+            "permission": "file.module.access",
             "items": LeafData.array([
                 [
                     "url": "/admin/file/browser/",
                     "label": "Browser",
+                    "permission": "file.browser.list",
                 ],
             ])
-        ]
-    }
-    
-    func userPermissionInstallHook(args: HookArguments) -> [[String: Any]] {
-        [
-            /// file
-            ["key": "file",                 "name": "File module"],
-            /// menu menus
-            ["key": "file.browser",         "name": "File browser"],
-            ["key": "file.create",          "name": "File create"],
-            ["key": "file.delete",          "name": "File delete"],
         ]
     }
 }

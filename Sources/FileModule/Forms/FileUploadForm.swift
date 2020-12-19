@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  
+//  FileUploadForm.swift
+//  FileModule
 //
 //  Created by Tibor Bodecs on 2020. 06. 03..
 //
