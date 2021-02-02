@@ -1,3 +1,7 @@
+#define(title):
+File browser
+#enddefine
+
 #define(css):
 tr {
     grid-template-columns: 1fr;
@@ -13,22 +17,23 @@ tr {
 }
 #enddefine
 
-#define(toolbarCenter):
-    File browser
-#enddefine
-#define(toolbarLeft):
-    <a href="#($req.url.path)">#svg("home")</a>
-#enddefine
-#define(toolbarRight):
-    #if(UserHasPermission("file.browser.create")):
-        <a href="#($req.url.path.trimLast())directory/?key=#Request(query: "key")">#svg("folder-plus")</a>
-        <a href="#($req.url.path.trimLast())upload/?key=#Request(query: "key")">#svg("arrow-up-circle")</a>
-    #endif
-#enddefine
-
 #define(body):
-<h5 class="m:h m:v:zero">#svg("folder") &nbsp; /#(current.key ?? "")</h5>
-<table class="m">
+<header class="margin-bottom">
+    <h1 class="margin-top-zero">File browser</h1>
+    <p class="margin-top-zero">
+        #var(navItems = [])
+        #if(UserHasPermission("file.browser.create")):
+            #(navItems.append(["link": $req.url.path.trimLast() + "directory/?key=" + Request(query: "key"), "label": "Create directory"]))
+            #(navItems.append(["link": $req.url.path.trimLast() + "upload/?key=" + Request(query: "key"), "label": "Upload files"]))
+        #endif
+        #for(navItem in navItems + table.nav ?? []):
+            #if(!isFirst): &middot; #endif<a href="#(navItem.link)"#if(navItem.targetBlank ?? false): target="_blank"#endif>#(navItem.label)</a>
+        #endfor
+    </p>
+</header>
+
+<h5 class="margin-zero">#svg("folder") &nbsp; /#(current.key ?? "")</h5>
+<table>
     <thead>
         <tr>
             <th class="td:center td:hidden td:compact:hidden">Icon</th>

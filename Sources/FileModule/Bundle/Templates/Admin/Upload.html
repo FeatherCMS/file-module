@@ -1,16 +1,20 @@
-#define(toolbarCenter):
-    Upload files
+#define(title):
+Upload files
 #enddefine
-#define(toolbarLeft):
-    <button type="submit" form="file-upload-form">#svg("save")</button>
-#enddefine
+
 #define(breadcrumb):
     <li><a href="#($req.url.path.trimLast())/browser">File browser</a></li>
 #enddefine
-#define(body):
-<div id="file-upload" class="content">
 
-    <form id="file-upload-form" class="m" method="post" action="#($req.url.path)" enctype="multipart/form-data">
+#define(body):
+<div class="container">
+
+    <header class="margin-bottom">
+        <h1 class="margin-top-zero">Upload files</h1>
+        <p class="margin-top-zero">Maximum upload file size: 10mb</p>
+    </header>
+    
+    <form id="file-upload-form" method="post" action="#($req.url.path)" enctype="multipart/form-data">
         #var(field = nil)
         
         #(field = ["id": "formId", "value": formId])
@@ -22,15 +26,15 @@
         #(field = ["id": "key", "value": Request(query: "key") ?? fields.key.value])
         #inline("Admin/Fields/Hidden")
 
-        <section class="m:b">
-            <label for="files">Files<span class="required">*</span></label>
+        <section>
+            <label for="files">Files<span class="color-red">*</span></label>
             <input id="files" name="files[]" type="file" multiple>
             #if(fields.files.error != nil):
-            <span class="error">#(fields.files.error)</span>
+            <span class="color-red">#(fields.files.error)</span>
             #endif
         </section>
         
-        #(field = ["label": "Upload files"])
+        #(field = ["label": "Upload files", "class": "shadow"])
         #inline("Admin/Fields/Button")
     </form>
 </div>

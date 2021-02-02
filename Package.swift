@@ -1,17 +1,26 @@
 // swift-tools-version:5.3
 import PackageDescription
 
-let package = Package(
-    name: "file-module",
-    platforms: [
-       .macOS(.v10_15)
+let isLocalTestMode = true
+
+
+var deps: [Package.Dependency] = [
+    .package(url: "https://github.com/FeatherCMS/feather-core", from: "1.0.0-beta"),
+]
+
+var targets: [Target] = [
+    .target(name: "FileModule", dependencies: [
+        .product(name: "FeatherCore", package: "feather-core"),
     ],
-    products: [
-        .library(name: "FileModule", targets: ["FileModule"]),
-    ],
-    dependencies: [
-        .package(url: "https://github.com/binarybirds/feather-core", from: "1.0.0-beta"),
-        
+    resources: [
+        .copy("Bundle"),
+    ]),
+]
+
+// @NOTE: https://bugs.swift.org/browse/SR-8658
+if isLocalTestMode {
+    deps.append(contentsOf: [
+        /// drivers
         .package(url: "https://github.com/vapor/fluent-sqlite-driver", from: "4.0.0"),
         .package(url: "https://github.com/binarybirds/liquid-local-driver", from: "1.2.0-beta"),
         
@@ -21,14 +30,9 @@ let package = Package(
         .package(name: "api-module", url: "https://github.com/feather-modules/api", from: "1.0.0-beta"),
         .package(name: "admin-module", url: "https://github.com/feather-modules/admin", from: "1.0.0-beta"),
         .package(name: "frontend-module", url: "https://github.com/feather-modules/frontend", from: "1.0.0-beta"),
-    ],
-    targets: [
-        .target(name: "FileModule", dependencies: [
-            .product(name: "FeatherCore", package: "feather-core"),
-        ],
-        resources: [
-            .copy("Bundle"),
-        ]),
+
+    ])
+    targets.append(contentsOf: [
         .target(name: "Feather", dependencies: [
             .product(name: "FeatherCore", package: "feather-core"),
             
@@ -47,5 +51,17 @@ let package = Package(
         .testTarget(name: "FileModuleTests", dependencies: [
             .target(name: "FileModule"),
         ])
-    ]
+    ])
+}
+
+let package = Package(
+    name: "file-module",
+    platforms: [
+       .macOS(.v10_15)
+    ],
+    products: [
+        .library(name: "FileModule", targets: ["FileModule"]),
+    ],
+    dependencies: deps,
+    targets: targets
 )
