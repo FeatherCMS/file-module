@@ -59,7 +59,13 @@ tr {
         #for(item in children):
     <tr>
         <td class="td:left m:h:s"><a href="#($req.url.path)?key=#(item.key)">#if(item.ext == nil):#svg("folder")#elseif(["png", "jpg", "jpeg"].contains(item.ext)):<img src="#(item.key.resolve())">#else:#svg("file")#endif</a></td>
-        <td class="td:left m:h:s td:separator"><a href="#($req.url.path)?key=#(item.key)">#(item.name)</a></td>
+        <td class="td:left m:h:s td:separator">
+            #if(item.ext != nil):
+            <a href="#(item.key.resolve())" target="_blank">#(item.name)</a>
+            #else:
+            <a href="#($req.url.path)?key=#(item.key)">#(item.name)</a>
+            #endif
+        </td>
         <td class="td:center">#if(item.ext != nil):<a href="#(item.key.resolve())" target="_blank">#svg("eye")</a>#else:&nbsp;#endif</td>
         #if(UserHasPermission("file.browser.delete")):
         <td class="td:center"><a href="#($req.url.path.trimLast())delete/?key=#(item.key)&cancel=#($req.url.path)?key=#Request(query: "key")">#svg("trash")</a></td>
