@@ -1,17 +1,20 @@
+#let(key = Request(query: "key") ?? fields.key.value)
+
 #define(title):
 Upload files
 #enddefine
 
 #define(breadcrumb):
-    <li><a href="#($req.url.path.trimLast())/browser">File browser</a></li>
+    <li><a href="#($req.url.path.trimLast())browser/?key=#(key)">File browser</a></li>
 #enddefine
 
 #define(body):
+
 <div class="container">
 
     <header class="margin-bottom">
         <h1 class="margin-top-zero">Upload files</h1>
-        <p class="margin-top-zero">Maximum upload file size: 10mb</p>
+        <p class="margin-top-zero">Destination: <a href="#($req.url.path.trimLast())browser/?key=#(key)">/#(key)</a></p>
     </header>
     
     <form id="file-upload-form" method="post" action="#($req.url.path)" enctype="multipart/form-data">
@@ -23,11 +26,11 @@ Upload files
         #(field = ["id": "formToken", "value": formToken])
         #inline("Admin/Fields/Hidden")
 
-        #(field = ["id": "key", "value": Request(query: "key") ?? fields.key.value])
+        #(field = ["id": "key", "value": key])
         #inline("Admin/Fields/Hidden")
 
         <section>
-            <label for="files">Files<span class="color-red">*</span></label>
+            <label for="files">Files<span class="color-gray"> (max size: #(maxUploadSize))</span><span class="color-red">*</span></label>
             <input id="files" name="files[]" type="file" multiple>
             #if(fields.files.error != nil):
             <span class="color-red">#(fields.files.error)</span>

@@ -78,6 +78,8 @@ struct FileAdminController {
                     }
                     return lhs.key < rhs.key
                 }
+                /// filter tmp folder and hidden files & directories
+                .filter { !($0.name == "tmp" && $0.ext == nil) && !$0.name.hasPrefix(".") }
                 
                 return req.leaf.render(template: "File/Admin/Browser", context: [
                     "current": current?.leafData ?? .trueNil,
@@ -133,6 +135,13 @@ struct FileAdminController {
         leafData["formId"] = .string(formId)
         leafData["formToken"] = .string(nonce)
         
+        /// provide max upload size for the template
+        let formatter = ByteCountFormatter()
+        formatter.countStyle = .binary
+        let byteCount = req.application.routes.defaultMaxBodySize
+        let maxUploadSize = formatter.string(fromByteCount: Int64(byteCount.value))
+        leafData["maxUploadSize"] = .string(maxUploadSize)
+
         return req.leaf.render(template: "File/Admin/Upload", context: .init(leafData))
     }
     
