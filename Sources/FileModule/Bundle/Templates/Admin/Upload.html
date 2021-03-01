@@ -21,13 +21,13 @@ Upload files
         #var(field = nil)
         
         #(field = ["id": "formId", "value": formId])
-        #inline("Admin/Fields/Hidden")
+        #inline("Common/Fields/Hidden")
         
         #(field = ["id": "formToken", "value": formToken])
-        #inline("Admin/Fields/Hidden")
+        #inline("Common/Fields/Hidden")
 
         #(field = ["id": "key", "value": key])
-        #inline("Admin/Fields/Hidden")
+        #inline("Common/Fields/Hidden")
 
         <section>
             <label for="files">Files<span class="color-gray"> (max size: #(maxUploadSize))</span><span class="color-red">*</span></label>
@@ -38,7 +38,7 @@ Upload files
         </section>
         
         #(field = ["label": "Upload files", "class": "shadow"])
-        #inline("Admin/Fields/Button")
+        #inline("Common/Fields/Button")
     </form>
 </div>
 #enddefine

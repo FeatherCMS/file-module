@@ -18,7 +18,7 @@ final class FileModule: ViperModule {
     }
 
     func boot(_ app: Application) throws {
-        app.hooks.register("admin", use: (router as! FileRouter).adminRoutesHook)
+        app.hooks.register("admin-routes", use: (router as! FileRouter).adminRoutesHook)
         
         app.hooks.register("leaf-admin-menu", use: leafAdminMenuHook)
         app.hooks.register("user-permission-install", use: userPermissionInstallHook)
