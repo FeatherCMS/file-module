@@ -25,12 +25,12 @@ final class FileModule: ViperModule {
     }
 
     // MARK: - hooks
-    func leafAdminMenuHook(args: HookArguments) -> LeafDataRepresentable {
+    func leafAdminMenuHook(args: HookArguments) -> TemplateDataRepresentable {
         [
             "name": "File",
             "icon": "folder",
             "permission": "file.module.access",
-            "items": LeafData.array([
+            "items": TemplateData.array([
                 [
                     "url": "/admin/file/browser/",
                     "label": "Browser",

@@ -7,9 +7,9 @@
 
 import FeatherCore
 
-extension File: LeafDataRepresentable {
+extension File: TemplateDataRepresentable {
 
-    public var leafData: LeafData {
+    public var templateData: TemplateData {
         .dictionary([
             "name": filename
         ])

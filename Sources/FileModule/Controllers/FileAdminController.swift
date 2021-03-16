@@ -20,12 +20,12 @@ fileprivate extension String {
 
 struct FileAdminController {
     
-    struct File: LeafDataRepresentable {
+    struct File: TemplateDataRepresentable {
         let name: String
         let key: String
         let ext: String?
         
-        var leafData: LeafData {
+        var templateData: TemplateData {
             .dictionary([
                 "name": name,
                 "key": key,
@@ -81,9 +81,9 @@ struct FileAdminController {
                 /// filter tmp folder and hidden files & directories
                 .filter { !($0.name == "tmp" && $0.ext == nil) && !$0.name.hasPrefix(".") }
                 
-                return req.leaf.render(template: "File/Admin/Browser", context: [
-                    "current": current?.leafData ?? .trueNil,
-                    "parent": parent?.leafData ?? .trueNil,
+                return req.tau.render(template: "File/Admin/Browser", context: [
+                    "current": current?.templateData ?? .trueNil,
+                    "parent": parent?.templateData ?? .trueNil,
                     "children": .array(sortedChildren),
                 ])
             }
@@ -97,11 +97,11 @@ struct FileAdminController {
         let formId = UUID().uuidString
         let nonce = req.generateNonce(for: "file-directory-form", id: formId)
         
-        var leafData = form.leafData.dictionary!
-        leafData["formId"] = .string(formId)
-        leafData["formToken"] = .string(nonce)
+        var templateData = form.templateData.dictionary!
+        templateData["formId"] = .string(formId)
+        templateData["formToken"] = .string(nonce)
         
-        return req.leaf.render(template: "File/Admin/Directory", context: .init(leafData))
+        return req.tau.render(template: "File/Admin/Directory", context: .init(templateData))
     }
     
     func directoryView(req: Request) -> EventLoopFuture<View> {
@@ -131,18 +131,18 @@ struct FileAdminController {
         let formId = UUID().uuidString
         let nonce = req.generateNonce(for: "file-upload-form", id: formId)
         
-        var leafData = form.leafData.dictionary!
-        leafData["formId"] = .string(formId)
-        leafData["formToken"] = .string(nonce)
+        var templateData = form.templateData.dictionary!
+        templateData["formId"] = .string(formId)
+        templateData["formToken"] = .string(nonce)
         
         /// provide max upload size for the template
         let formatter = ByteCountFormatter()
         formatter.countStyle = .binary
         let byteCount = req.application.routes.defaultMaxBodySize
         let maxUploadSize = formatter.string(fromByteCount: Int64(byteCount.value))
-        leafData["maxUploadSize"] = .string(maxUploadSize)
+        templateData["maxUploadSize"] = .string(maxUploadSize)
 
-        return req.leaf.render(template: "File/Admin/Upload", context: .init(leafData))
+        return req.tau.render(template: "File/Admin/Upload", context: .init(templateData))
     }
     
     func uploadView(req: Request) -> EventLoopFuture<View> {
@@ -191,7 +191,7 @@ struct FileAdminController {
             guard exists else {
                 return req.eventLoop.future(error: Abort(.notFound))
             }
-            return req.leaf.render(template: "File/Admin/Delete", context: [
+            return req.tau.render(template: "File/Admin/Delete", context: [
                 "formId": .string(formId),
                 "formToken": .string(nonce),
                 "name": .string(key),
