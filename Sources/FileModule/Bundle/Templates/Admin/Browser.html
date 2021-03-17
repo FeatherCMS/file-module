@@ -22,59 +22,58 @@ tr {
     }
     tr {
         #if(UserHasPermission("file.browser.delete")):
-        grid-template-columns: 80px 1fr 80px;
+        grid-template-columns: 4rem 1fr 4rem;
         #else:
-        grid-template-columns: 80px 1fr;
+        grid-template-columns: 4rem 1fr;
         #endif
     }
 }
 #enddefine
 
 #define(body):
-<header class="margin-bottom">
-    <h1 class="margin-top-zero">File browser</h1>
-    <p class="margin-top-zero">
-        #var(navItems = [
-            ["link": $req.url.path, "label": "Root"]
-        ])
-        #if(UserHasPermission("file.browser.create")):
-            #(navItems.append(["link": $req.url.path.trimLast() + "directory/?key=" + Request(query: "key"), "label": "Create directory"]))
-            #(navItems.append(["link": $req.url.path.trimLast() + "upload/?key=" + Request(query: "key"), "label": "Upload files"]))
-        #endif
-        #for(navItem in navItems + table.nav ?? []):
-            #if(!isFirst): &middot; #endif<a href="#(navItem.link)"#if(navItem.targetBlank ?? false): target="_blank"#endif>#(navItem.label)</a>
+<header class="lead">
+    #var(navItems = [])
+    #if(UserHasPermission("file.browser.create")):
+    #(navItems.append(["link": $req.url.path.trimLast() + "directory/?key=" + Request(query: "key"), "label": "Create directory"]))
+        #(navItems.append(["link": $req.url.path.trimLast() + "upload/?key=" + Request(query: "key"), "label": "Upload files"]))
+    #endif
+    #let(segmentItems = navItems + table.nav ?? [])
+    #if(!segmentItems.isEmpty()):
+    <div class="segment grid-#(segmentItems.count())">
+        #for(navItem in segmentItems):
+        <a href="#(navItem.link)"#if(navItem.targetBlank ?? false): target="_blank"#endif>#(navItem.label)</a>
         #endfor
-    </p>
+    </div>
+    #endif
+    <h1>File browser</h1>
 </header>
 
-<span class="display-block margin-s margin-vertical">#svg("folder") &nbsp; /#(current.key ?? "")</span>
+<p class="note"><a href="#($req.url.path)">Home</a> &middot; /#(current.key ?? "")</p>
 
 <table>
     <thead>
-        <tr class="background-1 text-align-left">
-            <th class="text-align-center compact-hidden">Icon</th>
-            <th class="margin-horizontal-s compact-hidden">Name</th>
+        <tr>
+            <td class="field">Icon</th>
+            <td class="field last">Name</th>
             #if(UserHasPermission("file.browser.delete")):
-            <th class="text-align-center compact-hidden">Delete</th>
+            <td class="action">Delete</th>
             #endif
         </tr>
     </thead>
     <tbody>
         #if(parent != nil):
-        <tr class="margin-bottom-s shadow-s padding-s">
-            <td class="compact-center"><a href="#($req.url.path)?key=#(parent.key)">#svg("folder", "class": "size-width")</a></td>
-            <td class="compact-center"><a href="#($req.url.path)?key=#(parent.key)">&bull;&bull;&bull;</a></td>
+        <tr>
+            <td class="field"><a href="#($req.url.path)?key=#(parent.key)">#svg("folder")</a></td>
+            <td class="field last"><a href="#($req.url.path)?key=#(parent.key)">&bull;&bull;&bull;</a></td>
             #if(UserHasPermission("file.browser.delete")):
-            <th class="compact-hidden">&nbsp;</th>
+            <th class="action">&nbsp;</th>
             #endif
         </tr>
         #endif
 
         #for(item in children):
-        <tr class="margin-bottom-s shadow-s padding-s">
-<!--            <td class="margin-horizontal-xs compact-margin compact-center compact-separator">-->
-        
-            <td class="compact-separator compact-center">
+        <tr>
+            <td class="field">
                 #if(item.ext != nil):
                 <a href="#(item.key.resolve())" target="_blank">
                 #else:
@@ -91,7 +90,7 @@ tr {
                 </a>
             </td>
 
-            <td class="compact-separator compact-center">
+            <td class="field last">
                 #if(item.ext != nil):
                 <a href="#(item.key.resolve())" target="_blank">#(item.name)</a>
                 #else:
@@ -100,7 +99,7 @@ tr {
             </td>
 
             #if(UserHasPermission("file.browser.delete")):
-            <td class="text-align-center margin-left-s">
+            <td class="action">
                 <a href="#($req.url.path.trimLast())delete/?key=#(item.key)&cancel=#($req.url.path)?key=#Request(query: "key")">
                     #svg("trash")
                 </a>

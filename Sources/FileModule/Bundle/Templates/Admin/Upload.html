@@ -5,16 +5,16 @@ Upload files
 #enddefine
 
 #define(breadcrumb):
-    <li><a href="#($req.url.path.trimLast())browser/?key=#(key)">File browser</a></li>
+    <a href="#($req.url.path.trimLast())browser/?key=#(key)">File browser</a>
 #enddefine
 
 #define(body):
 
 <div class="container">
 
-    <header class="margin-bottom">
-        <h1 class="margin-top-zero">Upload files</h1>
-        <p class="margin-top-zero">Destination: <a href="#($req.url.path.trimLast())browser/?key=#(key)">/#(key)</a></p>
+    <header class="lead">
+        <p class="note">Destination &middot; <a href="#($req.url.path.trimLast())browser/?key=#(key)">/#(key)</a></p>
+        <h1>Upload files</h1>
     </header>
     
     <form id="file-upload-form" method="post" action="#($req.url.path)" enctype="multipart/form-data">

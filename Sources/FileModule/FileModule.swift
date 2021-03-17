@@ -20,12 +20,12 @@ final class FileModule: ViperModule {
     func boot(_ app: Application) throws {
         app.hooks.register("admin-routes", use: (router as! FileRouter).adminRoutesHook)
         
-        app.hooks.register("leaf-admin-menu", use: leafAdminMenuHook)
+        app.hooks.register("template-admin-menu", use: templateAdminMenuHook)
         app.hooks.register("user-permission-install", use: userPermissionInstallHook)
     }
 
     // MARK: - hooks
-    func leafAdminMenuHook(args: HookArguments) -> TemplateDataRepresentable {
+    func templateAdminMenuHook(args: HookArguments) -> TemplateDataRepresentable {
         [
             "name": "File",
             "icon": "folder",
